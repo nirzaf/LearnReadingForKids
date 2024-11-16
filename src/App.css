@@ -1,42 +1,217 @@
-#root {
-  max-width: 1280px;
+.app-container {
+  max-width: 800px;
+  min-height: 100vh;
   margin: 0 auto;
   padding: 2rem;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+}
+
+.title {
+  color: #2c3e50;
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+  width: 100%;
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.menu {
+  background-color: white;
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 300px;
+  margin: 2rem auto;
+}
+
+.btn {
+  font-size: 1.2rem;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  text-align: center;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+}
+
+.primary {
+  background-color: #3498db;
+  color: white;
+}
+
+.success {
+  background-color: #2ecc71;
+  color: white;
+}
+
+.warning {
+  background-color: #f1c40f;
+  color: white;
+}
+
+.quiz-container {
+  background-color: white;
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+}
+
+.quiz-container h3 {
+  text-align: center;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.word-display {
+  font-size: 3rem;
+  margin: 2rem 0;
+  color: #2c3e50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  text-align: center;
+}
+
+.speak-btn {
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #9b59b6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+
+.speak-btn:hover:not(:disabled) {
+  transform: scale(1.05);
+  background-color: #8e44ad;
+}
+
+.speak-btn:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+}
+
+.speak-btn-small {
+  font-size: 1rem;
+  padding: 0.3rem 0.6rem;
+  background-color: #9b59b6;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+
+.speak-btn-small:hover:not(:disabled) {
+  transform: scale(1.05);
+  background-color: #8e44ad;
+}
+
+.speak-btn-small:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+}
+
+.answer-content {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 auto;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 300px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+input {
+  padding: 0.8rem;
+  font-size: 1.2rem;
+  border: 2px solid #bdc3c7;
+  border-radius: 8px;
+  text-align: center;
+  width: 100%;
+}
+
+.results {
+  background-color: white;
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+}
+
+.results h2,
+.results h3 {
+  text-align: center;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.answers-list {
+  margin: 2rem auto;
+  width: 100%;
+}
+
+.answer {
+  padding: 0.8rem;
+  margin: 0.5rem 0;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+}
+
+.correct {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.incorrect {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+@media (max-width: 600px) {
+  .app-container {
+    padding: 1rem;
+    margin: 1rem;
   }
-  to {
-    transform: rotate(360deg);
+  
+  .word-display {
+    font-size: 2.5rem;
   }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
 }
