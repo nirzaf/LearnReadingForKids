@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn Reading for Kids</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f0f8ff;
+            font-family: 'Comic Sans MS', cursive;
+        }
+        .container {
+            max-width: 800px;
+            margin-top: 2rem;
+        }
+        .word-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+        }
+        .btn-category {
+            font-size: 1.2rem;
+            margin: 0.5rem;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+        }
+        .word-display {
+            font-size: 2.5rem;
+            margin: 2rem 0;
+            color: #2c3e50;
+        }
+        .result-card {
+            background-color: #e8f5e9;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container text-center">
+        <h1 class="mb-4">🌟 Learn Reading for Kids 🌟</h1>
+        
+        <div id="category-selection">
+            <h2 class="mb-3">Choose Your Level:</h2>
+            <button class="btn btn-primary btn-category" onclick="startQuiz(3)">3 Letter Words</button>
+            <button class="btn btn-success btn-category" onclick="startQuiz(4)">4 Letter Words</button>
+            <button class="btn btn-warning btn-category" onclick="startQuiz(5)">5 Letter Words</button>
+        </div>
+
+        <div id="quiz-section" class="hidden">
+            <div class="word-card">
+                <h3>Question <span id="question-number">1</span>/10</h3>
+                <div class="word-display" id="current-word"></div>
+                <input type="text" id="word-input" class="form-control mb-3" placeholder="Type the word here...">
+                <button class="btn btn-primary" onclick="checkAnswer()">Submit</button>
+            </div>
+        </div>
+
+        <div id="results-section" class="hidden">
+            <div class="result-card">
+                <h2>Quiz Complete! 🎉</h2>
+                <h3>Your Score: <span id="score">0</span>/10</h3>
+                <div id="detailed-results"></div>
+                <button class="btn btn-primary mt-3" onclick="resetQuiz()">Try Again</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentWords = [];
+        let currentIndex = 0;
+        let score = 0;
+        let answers = [];
+
+        async function startQuiz(length) {
+            const response = await fetch(`/get_words/${length}`);
+            currentWords = await response.json();
+            currentIndex = 0;
+            score = 0;
+            answers = [];
+            
+            document.getElementById('category-selection').classList.add('hidden');
+            document.getElementById('quiz-section').classList.remove('hidden');
+            document.getElementById('results-section').classList.add('hidden');
+            
+            showNextWord();
+        }
+
+        function showNextWord() {
+            if (currentIndex < currentWords.length) {
+                document.getElementById('current-word').textContent = currentWords[currentIndex];
+                document.getElementById('question-number').textContent = currentIndex + 1;
+                document.getElementById('word-input').value = '';
+            } else {
+                showResults();
+            }
+        }
+
+        function checkAnswer() {
+            const input = document.getElementById('word-input').value.toLowerCase().trim();
+            const correct = currentWords[currentIndex].toLowerCase();
+            
+            answers.push({
+                word: correct,
+                userAnswer: input,
+                correct: input === correct
+            });
+
+            if (input === correct) {
+                score++;
+            }
+
+            currentIndex++;
+            showNextWord();
+        }
+
+        function showResults() {
+            document.getElementById('quiz-section').classList.add('hidden');
+            document.getElementById('results-section').classList.remove('hidden');
+            document.getElementById('score').textContent = score;
+
+            const detailedResults = document.getElementById('detailed-results');
+            detailedResults.innerHTML = '';
+            
+            answers.forEach((answer, index) => {
+                const resultHtml = `
+                    <div class="mb-2">
+                        <span style="color: ${answer.correct ? 'green' : 'red'}">
+                            Question ${index + 1}: ${answer.word}
+                            ${answer.correct ? '✓' : '✗'}
+                            ${!answer.correct ? `(You wrote: ${answer.userAnswer})` : ''}
+                        </span>
+                    </div>
+                `;
+                detailedResults.innerHTML += resultHtml;
+            });
+        }
+
+        function resetQuiz() {
+            document.getElementById('category-selection').classList.remove('hidden');
+            document.getElementById('results-section').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
